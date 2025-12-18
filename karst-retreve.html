@@ -17,6 +17,10 @@
       margin: 0;
     }
 
+    .popup {
+      align: center;
+    }
+    
     .popup img {
       max-width: 220px;
       display: block;
@@ -73,11 +77,11 @@
           }
 
           if (p.discussion) {
-            html += `<a href="${p.discussion}" target="_blank">💬 Discussion</a><br/>`;
+            html += `<a href="${p.discussion}" target="_blank">💬</a>`;
           }
 
           if (p.scan3d) {
-            html += `<a href="${p.scan3d}" target="_blank">🧊 Scan 3D</a><br/>`;
+            html += `<a href="${p.scan3d}" target="_blank">🧊</a>`;
           }
 
           html += `</div>`;
