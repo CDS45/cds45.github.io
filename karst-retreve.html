@@ -72,10 +72,18 @@
 
           let html = `<div class="popup"><strong>${p.name}</strong><br/>`;
 
+          if (p.scan3d) {
+            html += '<a href="${p.scan3d}" target="_blank">';
+          }
+          
           if (p.image) {
-            html += `<img src="${p.image}" alt="">`;
+            html += '<img src="${p.image}" alt="">';
           }
 
+          if (p.scan3d) {
+            html += '</a>';
+          }
+          
           if (p.discussion) {
             html += `<a href="${p.discussion}" target="_blank">💬</a>`;
           }
