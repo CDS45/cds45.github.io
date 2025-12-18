@@ -54,20 +54,6 @@
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     { opacity: 0.15 }
   ).addTo(map);
-
-  L.geoJSON(myGeoJson, {
-  pointToLayer: function (feature, latlng) {
-    return L.circleMarker(latlng, {
-      radius: 6,
-      color: '#ff0000',      // stroke color
-      weight: 1,             // stroke width
-      opacity: 0.8,          // stroke opacity
-      fillColor: '#ff0000',  // fill color
-      fillOpacity: 0.3       // ← transparency of the point
-    });
-  }
-}).addTo(map);
-
   
   // --- Load your GeoJSON points ---
   fetch('https://raw.githubusercontent.com/CDS45/bassin-retreve/refs/heads/main/karst.geojson')
@@ -77,8 +63,11 @@
         pointToLayer: (feature, latlng) =>
           L.circleMarker(latlng, {
             radius: 6,
-            color: '#d00',
-            fillOpacity: 0.9
+            color: '#ff0000',      // stroke color 
+            weight: 1,             // stroke width
+            opacity: 0.8,          // stroke opacity
+            fillColor: '#ff0000',  // fill color
+            fillOpacity: 0.1       // ← transparency of the point
           }),
 
         onEachFeature: (feature, layer) => {
