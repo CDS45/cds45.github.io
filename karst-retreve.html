@@ -52,6 +52,8 @@
     tileSize: 512
   }).addTo(map);
 
+  L.control.scale().addTo(map);
+
   // --- Optional reference layer (OSM, very light) ---
   const osm = L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
