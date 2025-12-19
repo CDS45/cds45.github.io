@@ -96,7 +96,9 @@
 
           html += `</div>`;
 
-          layer.bindPopup(html);
+          layer.bindPopup(html, {
+            maxWidth: 600
+          });
         }
       }).addTo(map);
     });
