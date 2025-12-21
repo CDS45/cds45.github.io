@@ -91,7 +91,7 @@
         if (feature.properties.layer === "panneaux") {
           if (feature.properties.numero === "0")
           {
-            const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br>`;
+            const content = `<strong>${feature.properties.panneau}</strong><br>`;
             layer.bindPopup(content);
           }
           else
