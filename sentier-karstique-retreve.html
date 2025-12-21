@@ -72,6 +72,7 @@
 
       pointsToLayer: function (feature, latlng) {
         if(feature.properties.layer === "parking") {
+          console.log(feature.properties);
           return L.marker(latlng, { icon: parkingIcon });
         }
       }
