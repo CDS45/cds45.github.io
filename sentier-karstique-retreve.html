@@ -71,6 +71,7 @@
     L.geoJSON(data, {
 
       pointsToLayer: function (feature, latlng) {
+        console.log(feature.properties);
         if(feature.properties.layer === "parking") {
           console.log(feature.properties);
           return L.marker(latlng, { icon: parkingIcon });
