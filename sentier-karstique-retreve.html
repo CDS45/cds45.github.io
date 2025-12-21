@@ -70,7 +70,7 @@
   function displayData(data){
     L.geoJSON(data, {
 
-      pointsToLayer: function (feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         console.log(feature.properties);
         if(feature.properties.layer === "parking") {
           console.log(feature.properties);
