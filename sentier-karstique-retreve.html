@@ -48,17 +48,7 @@
   fetch('https://raw.githubusercontent.com/CDS45/sentier-karstique-retreve/refs/heads/main/path.geojson')
     .then(r => r.json())
     .then(data => {
-      L.geoJSON(data, {
-        pointToLayer: (feature, latlng) =>
-          L.circleMarker(latlng, {
-            radius: 24,
-            color: '#ff0000',      // stroke color 
-            weight: 1,             // stroke width
-            opacity: 0.8,          // stroke opacity
-            fillColor: '#ff0000',  // fill color
-            fillOpacity: 0.1       // ← transparency of the point
-          }),
-      }).addTo(map);
+      L.geoJSON(data).addTo(map);
     });
 
 </script>
