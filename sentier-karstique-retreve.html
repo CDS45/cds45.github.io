@@ -97,12 +97,12 @@
           if (feature.properties.numero === "0")
           {
             const content = `<strong>${feature.properties.panneau}</strong><br>`;
-            layer.bindPopup(content);
+            layer.bindPopup(content, {closeButton: false});
           }
           else
           {
             const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br>`;
-            layer.bindPopup(content);
+            layer.bindPopup(content, {closeButton: false});
           }
         }
       }
