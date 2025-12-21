@@ -28,7 +28,7 @@
   const parkingIcon = L.divIcon({
     className: "",
     html: `
-      <svg width="24" height="24" viewBox="0 0 24 24">
+      <svg width="${isMobile ? 48 : 24}" height="${isMobile ? 48 : 24}" viewBox="0 0 24 24">
         <rect x="0" y="0" width="24" height="24" rx="4" fill="#1e73ff"/>
         <text x="12" y="17"
               text-anchor="middle"
