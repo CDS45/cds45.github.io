@@ -75,7 +75,7 @@
           return L.marker(latlng, { icon: parkingIcon });
         }
         return L.marker(latlng);
-      }
+      },
 
       onEachFeature: function (feature, layer) {
         if (feature.properties.layer === "panneaux") {
