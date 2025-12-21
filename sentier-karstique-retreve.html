@@ -89,8 +89,16 @@
 
       onEachFeature: function (feature, layer) {
         if (feature.properties.layer === "panneaux") {
-          const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br>`;
-          layer.bindPopup(content);
+          if (feature.properties.numero === "0")
+          {
+            const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br>`;
+            layer.bindPopup(content);
+          }
+          else
+          {
+            const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br>`;
+            layer.bindPopup(content);
+          }
         }
       }
 
