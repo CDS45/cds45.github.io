@@ -24,7 +24,7 @@
 
     .leaflet-popup-content {
       text-align: center;
-      font-size: xx-large;
+      font-size: large;
     }
 
     .leaflet-popup-content img {
@@ -33,6 +33,19 @@
       margin-left: auto;
       margin-right: auto;
       width: 300px;
+    }
+
+    @media (pointer: coarse) {
+      .leaflet-control-locate a {
+        width: 56px;
+        height: 56px;
+        line-height: 56px;
+        font-size: 26px;
+      }
+
+      .leaflet-popup-content {
+        font-size: xx-large;
+      }
     }
   </style>
 </head>
