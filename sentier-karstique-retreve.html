@@ -20,12 +20,19 @@
     #map {
       height: 80vh;
       height: 80dvh;
-      max-height: 900px;
     }
 
     .leaflet-popup-content {
       text-align: center;
       font-size: xx-large;
+    }
+
+    .leaflet-popup-content img {
+      display: block;
+      margin-bottom: 6px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 300px;
     }
   </style>
 </head>
@@ -100,6 +107,7 @@
 
       onEachFeature: function (feature, layer) {
         if (feature.properties.layer === "panneaux") {
+          console.log(feature.properties.numero);
           if (feature.properties.numero === "0")
           {
             const content = `<strong>${feature.properties.panneau}</strong><br>`;
@@ -107,7 +115,7 @@
           }
           else
           {
-            const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br><img src="https://ffspeleo.fr/csx/scripts/resizer.php?filename=T004%2Fimg${feature.properties.numero}%2Fe7%2F47%2Fol5694vnp75y&mime=image%252Fjpeg&originalname=${feature.properties.numero}.jpg&geometry=300x%3E&t=.jpg">`;
+            const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br><a href="#panneau-${feature.properties.numero}"><img src="https://ffspeleo.fr/csx/scripts/resizer.php?filename=T004%2Fimg${feature.properties.numero}%2Fe7%2F47%2Fol5694vnp75y&mime=image%252Fjpeg&originalname=${feature.properties.numero}.jpg&geometry=300x%3E&t=.jpg">`;
             layer.bindPopup(content, {closeButton: false});
           }
         }
@@ -117,5 +125,27 @@
   }
 
 </script>
+
+<section id="panneau-0">
+  <a href="#panneau-0"><h2>Accueil</h2></a>
+  <p>Accueil</p>
+</section>
+
+<section id="panneau-1">
+  <a href="#panneau-1"><h2>Géologie</h2></a>
+  <p>Géologie</p>
+</section>
+
+<section id="panneau-2">
+  <a href="#panneau-2"><h2>Mare forestière</h2></a>
+  <p>Mare forestière</p>
+</section>
+
+<section id="panneau-3">
+  <a href="#panneau-3"><h2>Formation des cavités</h2></a>
+  <p>Formation des cavités</p>
+</section>
+
+
 </body>
 </html>
