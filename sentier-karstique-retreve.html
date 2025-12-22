@@ -35,7 +35,7 @@
       width: 300px;
     }
 
-    @media (pointer: coarse) {
+    @media (pointer: coarse), (hover: none) {
       .leaflet-control-locate a {
         width: 56px;
         height: 56px;
@@ -54,7 +54,7 @@
 <div id="map"></div>
 
 <script>
-  const isMobile = window.matchMedia("(pointer: coarse)").matches;
+  const isMobile = window.matchMedia("(pointer: coarse)").matches || window.matchMedia("(hover: none)").matches;
 
   const parkingIcon = L.divIcon({
     className: "",
