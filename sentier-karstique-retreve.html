@@ -108,14 +108,14 @@
       onEachFeature: function (feature, layer) {
         if (feature.properties.layer === "panneaux") {
           console.log(feature.properties.numero);
-          if (feature.properties.numero === "0")
+          if (feature.properties.numero === 0)
           {
-            const content = `<strong>${feature.properties.panneau}</strong><br>`;
+            const content = `<strong>${feature.properties.panneau}</strong><a href="#panneau-${feature.properties.numero}"><img src="https://ffspeleo.fr/csx/scripts/resizer.php?filename=T004%2Fimg1%2F21%2Fa1%2F4ob694vj4k44&mime=image%252Fjpeg&originalname=0.jpg&geometry=1500x"></a>`;
             layer.bindPopup(content, {closeButton: false});
           }
           else
           {
-            const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br><a href="#panneau-${feature.properties.numero}"><img src="https://ffspeleo.fr/csx/scripts/resizer.php?filename=T004%2Fimg${feature.properties.numero}%2Fe7%2F47%2Fol5694vnp75y&mime=image%252Fjpeg&originalname=${feature.properties.numero}.jpg&geometry=300x%3E&t=.jpg">`;
+            const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br><a href="#panneau-${feature.properties.numero}"><img src="https://ffspeleo.fr/csx/scripts/resizer.php?filename=T004%2Fimg${feature.properties.numero}%2Fe7%2F47%2Fol5694vnp75y&mime=image%252Fjpeg&originalname=${feature.properties.numero}.jpg&geometry=300x%3E&t=.jpg"></a>`;
             layer.bindPopup(content, {closeButton: false});
           }
         }
