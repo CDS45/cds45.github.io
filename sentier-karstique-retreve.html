@@ -83,7 +83,11 @@
   // --- Map init ---
   const map = L.map('map', {
     minZoom: 12,
-    maxBounds: ([48.17855,1.386397],[47.749748,2.487549])
+    maxBounds: [
+      [47.749748, 1.386397],
+      [48.17855,  2.487549]
+    ],
+    maxBoundsViscosity: 1.0
   }).setView([47.996169, 2.001837], 15);
 
   L.control.locate().addTo(map);
@@ -125,7 +129,6 @@
 
       onEachFeature: function (feature, layer) {
         if (feature.properties.layer === "panneaux") {
-          console.log(feature.properties.numero);
           if (feature.properties.numero === 0)
           {
             const content = `<strong>${feature.properties.panneau}</strong><a href="#panneau-${feature.properties.numero}"><img src="https://ffspeleo.fr/csx/scripts/resizer.php?filename=T004%2Fimg1%2F21%2Fa1%2F4ob694vj4k44&mime=image%252Fjpeg&originalname=0.jpg&geometry=1500x"></a>`;
