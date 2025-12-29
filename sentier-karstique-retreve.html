@@ -82,7 +82,8 @@
 
   // --- Map init ---
   const map = L.map('map', {
-    minZoom: 10
+    minZoom: 12,
+    maxBounds: ([48.17855,1.386397],[47.749748,2.487549])
   }).setView([47.996169, 2.001837], 15);
 
   L.control.locate().addTo(map);
