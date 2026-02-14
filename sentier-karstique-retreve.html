@@ -36,11 +36,18 @@
     }
 
     @media (pointer: coarse), (hover: none) {
-      .leaflet-control-locate a {
+      /* Tous les boutons Leaflet (+ - locate etc.) */
+      .leaflet-bar a {
         width: 56px;
         height: 56px;
         line-height: 56px;
         font-size: 26px;
+      }
+
+      /* Icône interne du bouton locate */
+      .leaflet-control-locate .leaflet-control-locate-icon {
+        width: 26px;
+        height: 26px;
       }
 
       .leaflet-popup-content {
