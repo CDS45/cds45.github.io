@@ -62,6 +62,45 @@
     { opacity: 0.15 }
   ).addTo(map);
 
+  // --- Load your GeoJSON points ---
+  fetch('https://raw.githubusercontent.com/CDS45/mines-lunery/refs/heads/main/mines-lunery.geojson')
+    .then(r => r.json())
+    .then(data => {
+      L.geoJSON(data, {
+        pointToLayer: (feature, latlng) =>
+          L.circleMarker(latlng, {
+            radius: 24,
+            color: '#ff0000',      // stroke color 
+            weight: 1,             // stroke width
+            opacity: 0.8,          // stroke opacity
+            fillColor: '#ff0000',  // fill color
+            fillOpacity: 0.1       // ← transparency of the point
+          }),
+
+        onEachFeature: (feature, layer) => {
+          const p = feature.properties;
+
+          let html = `<strong>${p.name}</strong><br/>`;
+
+          if (p.scan3d) {
+            html += `<a href="${p.scan3d}" target="_blank">`;
+          }
+          
+          if (p.image) {
+            html += `<img src="${p.image}" alt="3D scan">`;
+          }
+
+          if (p.scan3d) {
+            html += `</a>`;
+          }
+
+          layer.bindPopup(html, {
+            maxWidth: 600
+          });
+        }
+      }).addTo(map);
+    });
+
 </script>
 </body>
 </html>
