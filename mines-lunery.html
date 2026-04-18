@@ -17,12 +17,12 @@
       margin: 0;
     }
 
-    .popup {
+    .leaflet-popup-content {
       text-align: center;
       font-size: xx-large;
     }
     
-    .popup img {
+    .leaflet-popup-content img {
       max-width: 400px;
       display: block;
       margin-bottom: 6px;
@@ -38,7 +38,7 @@
 
 <script>
   // --- Map init ---
-  const map = L.map('map').setView([46.955353, 2.267357], 13);
+  const map = L.map('map').setView([46.955353, 2.267357], 18);
 
   L.control.locate().addTo(map);
 
