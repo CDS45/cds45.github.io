@@ -79,15 +79,17 @@
   omnivore.kml(
     'https://raw.githubusercontent.com/CDS45/gouffre-ouagne/refs/heads/main/path.kml'
   )
-  .on('ready', function () {
+.on('ready', function () {
     console.log('KML loaded');
-    this.setStyle({
-        color: '#5C4033',
-        weight: 1,
-        fillColor: '#5C4033',
-        fillOpacity: 1
-    });
-    map.fitBounds(this.getBounds());
+    console.log('Layer:', this);
+    console.log('Bounds:', this.getBounds());
+    this.addTo(map);
+    const bounds = this.getBounds();
+    if (bounds.isValid()) {
+        map.fitBounds(bounds);
+    } else {
+        console.error('Invalid bounds');
+    }
   })
   .on('error', function (error) {
     console.error('KML loading error:', error);
