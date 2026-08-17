@@ -75,26 +75,41 @@
   ).addTo(map);
 
   // --- Load KML points ---
-
+  function styleLayer(layer, style) {
+      if (layer.setStyle) {
+          layer.setStyle(style);
+      }
+      if (layer.eachLayer) {
+          layer.eachLayer(child => {
+              styleLayer(child, style);
+          });
+      }
+  }
+  const brown = {
+      color: '#5C4033',
+      weight: 2,
+      opacity: 1,
+      fillColor: '#5C4033',
+      fillOpacity: 1
+  };
+  
   omnivore.kml(
-    'https://raw.githubusercontent.com/CDS45/gouffre-ouagne/refs/heads/main/path.kml'
+      'https://raw.githubusercontent.com/CDS45/gouffre-ouagne/refs/heads/main/topo.kml'
   )
-.on('ready', function () {
-    console.log('KML loaded');
-    console.log('Layer:', this);
-    console.log('Bounds:', this.getBounds());
-    this.addTo(map);
-    const bounds = this.getBounds();
-    if (bounds.isValid()) {
-        map.fitBounds(bounds);
-    } else {
-        console.error('Invalid bounds');
-    }
+  .on('ready', function () {
+      console.log('KML loaded');
+      styleLayer(this, brown);
+      this.addTo(map);
+      const bounds = this.getBounds();
+      console.log('Bounds:', bounds);
+      if (bounds.isValid()) {
+          map.fitBounds(bounds);
+      }
   })
   .on('error', function (error) {
-    console.error('KML loading error:', error);
+      console.error('KML loading error:', error);
   });
-
+  
   // --- Load your GeoJSON points ---
   
   /*
