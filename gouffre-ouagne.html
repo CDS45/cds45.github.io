@@ -8,7 +8,10 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+  <!-- plugin to deal with KML files -->
+  <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.4/leaflet-omnivore.min.js"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
   <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
 
   <style>
@@ -71,8 +74,28 @@
     { opacity: 0.15 }
   ).addTo(map);
 
-  // --- Load your GeoJSON points ---
+  // --- Load KML points ---
 
+  omnivore.kml(
+    'https://raw.githubusercontent.com/CDS45/gouffre-ouagne/refs/heads/main/path.kml'
+  )
+  .on('ready', function () {
+    console.log('KML loaded');
+    this.setStyle({
+        color: '#5C4033',
+        weight: 1,
+        fillColor: '#5C4033',
+        fillOpacity: 1
+    });
+    map.fitBounds(this.getBounds());
+  })
+  .on('error', function (error) {
+    console.error('KML loading error:', error);
+  });
+
+  // --- Load your GeoJSON points ---
+  
+  /*
   fetch('https://raw.githubusercontent.com/CDS45/gouffre-ouagne/refs/heads/main/path.json')
     .then(r => r.json())
     .then(data => {
@@ -85,6 +108,7 @@
         }
       }).addTo(map);
     });
+    */
 
   
   fetch('https://raw.githubusercontent.com/CDS45/gouffre-ouagne/refs/heads/main/details.geojson')
