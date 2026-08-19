@@ -100,11 +100,6 @@
       console.log('KML loaded');
       styleLayer(this, brown);
       this.addTo(map);
-      const bounds = this.getBounds();
-      console.log('Bounds:', bounds);
-      if (bounds.isValid()) {
-          map.fitBounds(bounds);
-      }
   })
   .on('error', function (error) {
       console.error('KML loading error:', error);
