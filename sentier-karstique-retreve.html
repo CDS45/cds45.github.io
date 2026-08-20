@@ -99,6 +99,7 @@
 
   L.control.locate().addTo(map);
 
+  <!-- LiDAR HD tiles -->
   L.tileLayer.wms('https://data.geopf.fr/wms-r', {
     service: 'WMS',
     version: '1.3.0',
@@ -111,10 +112,22 @@
     tileSize: 512
   }).addTo(map);
 
-  // --- Optional reference layer (OSM, very light) ---
-  const osm = L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    { opacity: 0.50 }
+  <!-- TOP25 tiles, 50% opacity -->
+  L.tileLayer(
+    'https://data.geopf.fr/wmts?' +
+    'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0' +
+    '&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR' +
+    '&STYLE=normal' +
+    '&FORMAT=image/jpeg' +
+    '&TILEMATRIXSET=PM' +
+    '&TILEMATRIX={z}' +
+    '&TILEROW={y}' +
+    '&TILECOL={x}',
+    {
+        opacity: 0.5,
+        maxZoom: 18,
+        attribution: '&copy; IGN'
+    }
   ).addTo(map);
   
   // --- Load your GeoJSON points ---
