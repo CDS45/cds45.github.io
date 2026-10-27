@@ -1,5 +1,5 @@
 {
-  "css": ".CALENDAR-INDEX-0, .CALENDAR-INDEX-0 .dhx_body, .CALENDAR-INDEX-0 .dhx_title { background-color: #8B4513; } .CALENDAR-INDEX-1, .CALENDAR-INDEX-1 .dhx_body, .CALENDAR-INDEX-1 .dhx_title  { background-color: #D2691E; } .CALENDAR-INDEX-2, .CALENDAR-INDEX-2 .dhx_body, .CALENDAR-INDEX-2 .dhx_title  { background-color: #FA8072; }",
+  "css": ".CALENDAR-INDEX-0, .CALENDAR-INDEX-0 .dhx_body, .CALENDAR-INDEX-0 .dhx_title { background-color: #ff0000; } .CALENDAR-INDEX-1, .CALENDAR-INDEX-1 .dhx_body, .CALENDAR-INDEX-1 .dhx_title  { background-color: #00ff00; } .CALENDAR-INDEX-2, .CALENDAR-INDEX-2 .dhx_body, .CALENDAR-INDEX-2 .dhx_title  { background-color: #0000FF; }",
   "ending_hour": "18",
   "hour_format": "%g:%i %a",
   "prefer_browser_language": true,
