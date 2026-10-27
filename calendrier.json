@@ -1,14 +1,23 @@
 {
   "css": ".CALENDAR-INDEX-0, .CALENDAR-INDEX-0 .dhx_body, .CALENDAR-INDEX-0 .dhx_title { background-color: #ADA13E; } .CALENDAR-INDEX-1, .CALENDAR-INDEX-1 .dhx_body, .CALENDAR-INDEX-1 .dhx_title  { background-color: #D99F6A; } .CALENDAR-INDEX-2, .CALENDAR-INDEX-2 .dhx_body, .CALENDAR-INDEX-2 .dhx_title  { background-color: #FF7D7C; }",
-  "ending_hour": "18",
-  "hour_format": "%g:%i %a",
+  "title": "Spéléo Loiret",
   "prefer_browser_language": true,
+  "language": fr,
   "skin": "dhtmlxscheduler_flat.css",
   "start_of_week": "mo",
-  "starting_hour": "8",
-  "tab": "month",
+  "tab": "agenda",
+  "tabs": [ "month","agenda" ],
+  "controls": [
+    "next",
+    "previous",
+    "today",
+    "date",
+    "menu"
+  ],
+  "target": "_blank",
+  "menu_shows_calendar_descriptions": true,
+  "menu_shows_calendar_visibility_toggle": true,
   "timezone": "Europe/Paris",
-  "title": "Spéléo dans le Loiret",
   "url": [
     "https://calendar.google.com/calendar/ical/cdspeleo45%40gmail.com/public/basic.ics",
     "https://calendar.google.com/calendar/ical/gaslspeleoloiret%40gmail.com/public/basic.ics",
