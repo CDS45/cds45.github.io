@@ -100,7 +100,7 @@
   L.control.locate().addTo(map);
 
   <!-- LiDAR HD tiles -->
-  L.tileLayer.wms('https://data.geopf.fr/wms-r', {
+  L.tileLayer.wms('https://data.geopf.fr/private/wms-r', {
     service: 'WMS',
     version: '1.3.0',
     request: 'GetMap',
@@ -122,10 +122,10 @@
     '&TILEMATRIXSET=PM' +
     '&TILEMATRIX={z}' +
     '&TILEROW={y}' +
-    '&TILECOL={x}',
+    '&TILECOL={x}' +,
+    '&apikey=ign_scan_ws',
     {
-        opacity: 0.5,
-        maxZoom: 18,
+        opacity: 0.25,
         attribution: '&copy; IGN'
     }
   ).addTo(map);
