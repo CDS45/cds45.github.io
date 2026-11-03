@@ -63,6 +63,8 @@
 <script>
   const isMobile = window.matchMedia("(pointer: coarse)").matches || window.matchMedia("(hover: none)").matches;
 
+  console.log({isMobile});
+
   const parkingIcon = L.divIcon({
     className: "",
     html: `
