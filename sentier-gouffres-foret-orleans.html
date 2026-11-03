@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Sentier karstique du bassin de la Retrève</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+  <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+
+  <style>
+    html, body, #map {
+      height: 100%;
+      margin: 0;
+    }
+
+    #map {
+      height: 80vh;
+      height: 80dvh;
+    }
+
+    .leaflet-popup-content {
+      text-align: center;
+      font-size: large;
+    }
+
+    .leaflet-popup-content img {
+      display: block;
+      margin-bottom: 6px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 300px;
+    }
+
+    @media (pointer: coarse), (hover: none) {
+      /* Tous les boutons Leaflet (+ - locate etc.) */
+      .leaflet-bar a {
+        width: 56px;
+        height: 56px;
+        line-height: 56px;
+        font-size: 26px;
+      }
+
+      /* Icône interne du bouton locate */
+      .leaflet-control-locate .leaflet-control-locate-icon {
+        width: 26px;
+        height: 26px;
+      }
+
+      .leaflet-popup-content {
+        font-size: xx-large;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+  const isMobile = window.matchMedia("(pointer: coarse)").matches || window.matchMedia("(hover: none)").matches;
+
+  const parkingIcon = L.divIcon({
+    className: "",
+    html: `
+      <svg width="${isMobile ? 48 : 24}" height="${isMobile ? 48 : 24}" viewBox="0 0 24 24">
+        <rect x="0" y="0" width="24" height="24" rx="4" fill="#1e73ff"/>
+        <text x="12" y="17"
+              text-anchor="middle"
+              font-size="14"
+              font-weight="bold"
+              fill="white">P</text>
+      </svg>
+    `,
+    iconSize: isMobile ? [48, 48] : [24, 24],
+    iconAnchor: isMobile ? [24, 24] : [12, 12]
+  });
+
+  const paneIcon = L.icon({
+    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+    iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+    iconSize: isMobile ? [36, 58] : [25, 41],
+    iconAnchor: isMobile ? [18, 58] : [12, 41]
+  });
+
+  // --- Map init ---
+  const map = L.map('map', {
+    minZoom: 12,
+    maxBounds: [
+      [47.749748, 1.386397],
+      [48.17855,  2.487549]
+    ],
+    maxBoundsViscosity: 1.0
+  }).setView([47.996169, 2.001837], 15);
+
+  L.control.locate().addTo(map);
+
+  <!-- LiDAR HD tiles -->
+  L.tileLayer.wms('https://data.geopf.fr/wms-r', {
+    service: 'WMS',
+    version: '1.3.0',
+    request: 'GetMap',
+    layers: 'IGNF_LIDAR-HD_MNT_ELEVATION.ELEVATIONGRIDCOVERAGE.SHADOW',
+    styles: '',
+    format: 'image/png',
+    transparent: false,
+    crs: L.CRS.EPSG3857,
+    tileSize: 512
+  }).addTo(map);
+
+  <!-- TOP25 tiles, 50% opacity -->
+  L.tileLayer(
+    'https://data.geopf.fr/wmts?' +
+    'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0' +
+    '&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN25TOUR' +
+    '&STYLE=normal' +
+    '&FORMAT=image/jpeg' +
+    '&TILEMATRIXSET=PM' +
+    '&TILEMATRIX={z}' +
+    '&TILEROW={y}' +
+    '&TILECOL={x}',
+    {
+        opacity: 0.5,
+        maxZoom: 18,
+        attribution: '&copy; IGN'
+    }
+  ).addTo(map);
+  
+  // --- Load your GeoJSON points ---
+  fetch('https://raw.githubusercontent.com/CDS45/sentier-karstique-retreve/refs/heads/main/path.geojson')
+    .then(r => r.json())
+    .then(data => {
+      displayData(data);
+    });
+
+  function displayData(data){
+    L.geoJSON(data, {
+
+      pointToLayer: function (feature, latlng) {
+        if(feature.properties.layer === "parking") {
+          return L.marker(latlng, { icon: parkingIcon });
+        }
+        return L.marker(latlng, { icon: paneIcon });
+      },
+
+      onEachFeature: function (feature, layer) {
+        if (feature.properties.layer === "panneaux") {
+          if (feature.properties.numero === 0)
+          {
+            const content = `<strong>${feature.properties.panneau}</strong><a href="#panneau-${feature.properties.numero}"><img src="https://ffspeleo.fr/csx/scripts/resizer.php?filename=T004%2Fimg1%2F21%2Fa1%2F4ob694vj4k44&mime=image%252Fjpeg&originalname=0.jpg&geometry=1500x"></a>`;
+            layer.bindPopup(content, {closeButton: false});
+          }
+          else
+          {
+            const content = `<strong>${feature.properties.numero} : ${feature.properties.panneau}</strong><br><a href="#panneau-${feature.properties.numero}"><img src="https://ffspeleo.fr/csx/scripts/resizer.php?filename=T004%2Fimg${feature.properties.numero}%2Fe7%2F47%2Fol5694vnp75y&mime=image%252Fjpeg&originalname=${feature.properties.numero}.jpg&geometry=300x%3E&t=.jpg"></a>`;
+            layer.bindPopup(content, {closeButton: false});
+          }
+        }
+      }
+
+    }).addTo(map);
+  }
+
+</script>
+
+<section id="panneau-0">
+  <a href="#panneau-0"><h2>Le sentier des gouffres de la forêt d'Orléans</h2></a>
+  <p>En suivant ce sentier karstique, le comité départemental de spéléologie du Loiret (CDS 45) vous invite à comprendre le fonctionnement du karst présent dans le sous-sol du massif forestier d'Orléans. Vous allez également découvrir les faces cachées de la forêt domaniale d'Orléans, la plus grande de France métropolitaine.</p>
+  <p>Un karst est un massif calcaire dans lequel l'eau a creusé de nombreuses cavités. On parle de massifs ou de reliefs karstiques.</p>
+  <p>Le Comité départemental de spéléologie du Loiret (CDS 45) rassemble 3 clubs dans le Loiret, pour environ 45 membres.</p>
+  <p><ul></ul>Les 3 clubs sont : 
+    <li>Le groupe d'Amis Spéléologues (GAS): https://speleo-loiret.fr/ - https://www.facebook.com/GASL45</li>
+    <li>Sorry no téléphone (SNT)</li>
+    <li>Spéléo subaquatique Loiret (SSL)</li>
+  </ul></p>
+  <p>Pour contacter le Comité Départemental de Spéléologie du Loiret.</p>
+  <p>Ces clubs font partie du Comité spéléologique régional Centre-Val de Loire (CSR CVL), qui compte environ 160 spéléos dans la région. Ils sont affiliés à la Fédération Française de Spéléologie (FFS) qui a été créée le 1er juin 1963 à Millau. Elle est issue de la réunion de la Société Spéléologique de France, fondée le 1er février 1895 par Édouard-Alfred Martel, et du Comité Nationale de Spéléologie, fondé le 28 mai 1948.</p>
+  <p>Aujourd'hui, elle rassemble 13 comités régionaux, 76 comités départementaux et 385 clubs répartis sur tout le territoire français pour environ 7500 spéléologues licenciés.</p>
+</section>
+
+<section id="panneau-1">
+  <a href="#panneau-1"><h2>Géologie</h2></a>
+  <p>Géologie</p>
+</section>
+
+<section id="panneau-2">
+  <a href="#panneau-2"><h2>Mare forestière</h2></a>
+  <p>Les mares forestières</p>
+</section>
+
+<section id="panneau-3">
+  <a href="#panneau-3"><h2>Formation des cavités</h2></a>
+  <p>La formation des cavités</p>
+</section>
+
+<section id="panneau-4">
+  <a href="#panneau-4"><h2>Arbres gîte</h2></a>
+  <p>Les arbres gîte</p>
+</section>
+
+</body>
+</html>
