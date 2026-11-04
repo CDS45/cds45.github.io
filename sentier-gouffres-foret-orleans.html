@@ -90,14 +90,7 @@
   });
 
   // --- Map init ---
-  const map = L.map('map', {
-    minZoom: 12,
-    maxBounds: [
-      [47.749748, 1.386397],
-      [48.17855,  2.487549]
-    ],
-    maxBoundsViscosity: 1.0
-  }).setView([47.996169, 2.001837], 15);
+  const map = L.map('map');
 
   L.control.locate().addTo(map);
 
@@ -114,7 +107,7 @@
     tileSize: 512
   }).addTo(map);
 
-  <!-- TOP25 tiles, 50% opacity -->
+  <!-- TOP25 tiles, 25% opacity -->
   L.tileLayer(
     'https://data.geopf.fr/private/wmts?' +
     'SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0' +
@@ -139,8 +132,9 @@
       displayData(data);
     });
 
+  // --- Display GeoJSON points ---
   function displayData(data){
-    L.geoJSON(data, {
+    const layer = L.geoJSON(data, {
 
       pointToLayer: function (feature, latlng) {
         if(feature.properties.layer === "parking") {
@@ -163,10 +157,10 @@
           }
         }
       }
-
     }).addTo(map);
-  }
 
+    map.fitBounds(layer.getBounds(), { padding: [30, 30] });
+  }
 </script>
 
 <section id="panneau-0">
