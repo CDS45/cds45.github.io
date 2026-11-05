@@ -90,7 +90,26 @@
   });
 
   // --- Map init ---
-  const map = L.map('map');
+  const map = L.map('map', {
+    scrollWheelZoom: false, // disable stupid "scroll = zoom" behavior
+  });
+
+  // Then intercept wheel events ourselves
+  map.getContainer().addEventListener(
+    "wheel",
+    function (e) {
+      if (e.ctrlKey) {
+        // pinch gesture -> zoom (deltaY sign gives direction)
+        e.preventDefault();
+        map.setZoom(map.getZoom() - Math.sign(e.deltaY));
+      } else {
+        // two-finger scroll -> pan the map instead
+        e.preventDefault();
+        map.panBy([e.deltaX, -e.deltaY], { animate: false });
+      }
+    },
+    { capture: true, passive: false }
+  );
 
   L.control.locate().addTo(map);
 
