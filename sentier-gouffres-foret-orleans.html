@@ -92,6 +92,12 @@
   // --- Map init ---
   const map = L.map('map', {
     scrollWheelZoom: false, // disable stupid "scroll = zoom" behavior
+    minZoom: 12,
+    maxBounds: [
+      [47.749748, 1.386397],
+      [48.17855,  2.487549]
+    ],
+    maxBoundsViscosity: 1.0
   });
 
   // Then intercept wheel events ourselves
